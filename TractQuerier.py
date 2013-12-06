@@ -5,9 +5,15 @@ from vtk.util import numpy_support as ns
 import numpy as np
 
 #
+# global variables 
+#
+tractography_file_name='C:\\Users\\Georgios\\workspace\\tract_querier\\OutputFiberBundle.vtk'
+atlas_file_name='C:\\Users\\Georgios\\workspace\\tract_querier\\parc.nii.gz'
+queries_string='C:\\Users\Georgios\\workspace\\tract_querier\\queries\\wmql_1_cst.qry'
+
+#
 # TractQuerier
 #
-
 class TractQuerier:
   def __init__(self, parent):
     parent.title = "Tract Querier"
@@ -103,14 +109,15 @@ class TractQuerierWidget:
     labelNode = self.labelSelector.currentNode()
     if not fiberNode and not labelNode:
        qt.QMessageBox.critical(slicer.util.mainWindow(), 'FiberBundleToLabelMap', "Must select fiber bundle and label map")
-    query_script=file('\\Users\\Georgios\\workspace\\tract_querier\\queries\\FreeSurfer.qry').read()
-    fiber_path='\\Users\\Georgios\\workspace\\tract_querier\\OutputFiberBundle.vtk'
-    slicer.util.loadFiberBundle(fiber_path)
-    fiberNode=slicer.util.getNode(pattern="OutputFiberBundle")
-    parc_path='\\Users\\Georgios\\workspace\\tract_querier\\parc.nii.gz'
-    slicer.util.loadVolume(parc_path)
-    parcNode=slicer.util.getNode(pattern="parc")
-    run(fiberNode, parcNode)
+       return
+   # query_script=file('\\Users\\Georgios\\workspace\\tract_querier\\queries\\FreeSurfer.qry').read()
+   # fiber_path='\\Users\\Georgios\\workspace\\tract_querier\\OutputFiberBundle.vtk'
+   # slicer.util.loadFiberBundle(fiber_path)
+   # fiberNode=slicer.util.getNode(pattern="OutputFiberBundle")
+   # parc_path='\\Users\\Georgios\\workspace\\tract_querier\\parc.nii.gz'
+   # slicer.util.loadVolume(parc_path)
+   # parcNode=slicer.util.getNode(pattern="parc")
+    run(fiberNode, labelNode)
 
 from optparse import OptionParser
 import os
@@ -124,12 +131,12 @@ def run(fiberNode,parcNode):
     )
     (options, args) = parser.parse_args()
 
-    options.tractography_file_name='C:\\Users\\Georgios\\workspace\\tract_querier\\OutputFiberBundle.vtk'
-    options.atlas_file_name='C:\\Users\\Georgios\\workspace\\tract_querier\\parc.nii.gz'
-    options.queries_string='C:\\Users\Georgios\\workspace\\tract_querier\\queries\\wmql_1_cst.qry'
+    options.tractography_file_name=tractography_file_name
+    options.atlas_file_name=atlas_file_name
+    options.queries_string=queries_string
     options.output_file_name='output'
     options.bounding_box_affine_transform=None
-    options.include='C:\\Users\\Georgios\\workspace\\tract_querier'
+    #options.include='C:\\Users\\Georgios\\workspace\\tract_querier'
     options.length_threshold=2
     options.threshold=0
     options.interactive=False
@@ -159,10 +166,10 @@ def run(fiberNode,parcNode):
         bounding_box_affine_transform = np.eye(4)
 
     print "Loading files"
-    if options.include:
-        folders = [options.include]
-    else:
-        folders = []
+#    if options.include:
+#        folders = [options.include]
+#    else:
+    folders = []
 
     default_folder = tract_querier.default_queries_folder
     folders = [os.getcwd()] + folders + [default_folder]
