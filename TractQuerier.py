@@ -262,8 +262,7 @@ def run(fiberNode,parcNode):
     # 
     polyDataOut=tracts_to_vtkPolyData64(tr_out)
     print 'update polydata'
-    updateOutputNode(fiberNode,polyDataOut)
-    fiberNode.Modified()
+    updateOutputNode(polyDataOut)
     return   
      
 def save_query(query_name, tractography, options, evaluated_queries, extension='.vtk', extra_kwargs={}):
@@ -383,10 +382,24 @@ def tracts_to_vtkPolyData64(tracts, tracts_data={}, lines_indices=None):
 
     return poly_data
 
-def updateOutputNode(node,polydata):
-    if node.GetPolyData()==[]:
-        node.SetAndObservedPolyData(slicer.vtkPolyData())
-    nodePolyData=node.GetPolyData()
-    nodePolyData.SetPoints(polydata.GetPoints())
-    nodePolyData.SetLines(polydata.GetLines())
-    nodePolyData.Update()
+def updateOutputNode(polydata):
+    # clear scene
+    scene=slicer.mrmlScene
+    scene.Clear(0)
+    
+    # create fiber node
+    fiber=slicer.vtkMRMLModelNode()
+    fiber.SetScene(scene)
+    fiber.SetName("QueryTract")
+    fiber.SetAndObservePolyData(polydata)
+    
+    # create display model fiber node
+    fiberDisplay=slicer.vtkMRMLModelDisplayNode()
+    fiberDisplay.SetScene(scene)
+    scene.AddNode(fiberDisplay)
+    fiber.SetAndObserveDisplayNodeID(fiberDisplay.GetID())
+    
+    # add to scene
+    fiberDisplay.SetInputPolyData(polydata)
+    scene.AddNode(fiber)
+    
