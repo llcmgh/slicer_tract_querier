@@ -17,18 +17,26 @@ queries_string='C:\\Users\Georgios\\workspace\\tract_querier\\queries\\wmql_1_cs
 class TractQuerier:
   def __init__(self, parent):
     parent.title = "Tract Querier"
-    parent.categories = ["Examples"]
+    parent.categories = []
     parent.dependencies = []
     parent.contributors = ["Lichen Liang (MGH)",
                            "Steve Pieper (Isomics)"
                            ] # replace with "Firstname Lastname (Org)"
     parent.helpText = """
-    TractQurier
+    TractQuerier
     """
     parent.acknowledgementText = """
     This file was originally developed by ....""" # replace with organization, grant and thanks.
     self.parent = parent
-
+    try:
+       slicer.selfTests
+    except AttributeError:
+       slicer.selfTests = {}
+    slicer.selfTests['TractQuerier'] = self.runTest
+ 
+  def runTest(self):
+     tester = TractQuerierTest()
+     tester.runTest()
 #
 # TractQuerierWidget
 #
@@ -47,168 +55,126 @@ class TractQuerierWidget:
       self.parent.show()
 
   def setup(self):
-    # Collapsible button
-    self.queryCollapsibleButton = ctk.ctkCollapsibleButton()
-    self.queryCollapsibleButton.text = "query Operator"
-    self.layout.addWidget(self.queryCollapsibleButton)
-
-    # Layout within the collapsible button
-    self.queryFormLayout = qt.QFormLayout(self.queryCollapsibleButton)
-
-    # the volume selectors
-    self.inputFrame = qt.QFrame(self.queryCollapsibleButton)
-    self.inputFrame.setLayout(qt.QHBoxLayout())
-    self.queryFormLayout.addWidget(self.inputFrame)
-    self.inputSelector = qt.QLabel("Input Fiber Bundle: ", self.inputFrame)
-    self.inputFrame.layout().addWidget(self.inputSelector)
-    self.fiberSelector = slicer.qMRMLNodeComboBox(self.inputFrame)
-    self.fiberSelector.nodeTypes = ( ("vtkMRMLFiberBundleNode"), "" )
-    self.fiberSelector.addEnabled = False
-    self.fiberSelector.removeEnabled = False
-    self.fiberSelector.setMRMLScene( slicer.mrmlScene )
-    self.inputFrame.layout().addWidget(self.fiberSelector)
-
-    self.outputFrame = qt.QFrame(self.queryCollapsibleButton)
-    self.outputFrame.setLayout(qt.QHBoxLayout())
-    self.queryFormLayout.addWidget(self.outputFrame)
-    self.outputSelector = qt.QLabel("Parc Volume: ", self.outputFrame)
-    self.outputFrame.layout().addWidget(self.outputSelector)
-    self.labelSelector = slicer.qMRMLNodeComboBox(self.outputFrame)
-    self.labelSelector.nodeTypes = ( ("vtkMRMLScalarVolumeNode"), "" )
-    self.labelSelector.setMRMLScene( slicer.mrmlScene )
-    self.outputFrame.layout().addWidget(self.labelSelector)
-
-    self.queryFrame = qt.QFrame(self.queryCollapsibleButton)
-    self.queryFrame.setLayout(qt.QHBoxLayout())
-    self.queryFormLayout.addWidget(self.queryFrame)
-    self.querySelector = qt.QLabel("Query Fiber Bundle: ", self.queryFrame)
-    self.queryFrame.layout().addWidget(self.querySelector)
-    self.fiberQuerySelector = slicer.qMRMLNodeComboBox(self.queryFrame)
-    self.fiberQuerySelector.nodeTypes = ( ("vtkMRMLFiberBundleNode"), "" )
-    #self.fiberQuerySelector.addEnabled = False
-    #self.fiberQuerySelector.removeEnabled = False
-    self.fiberQuerySelector.setMRMLScene( slicer.mrmlScene )
-    self.queryFrame.layout().addWidget(self.fiberQuerySelector)
-
-
-    # Apply button
-    queryButton = qt.QPushButton("Apply Tract Query")
-    queryButton.toolTip = "Run the query."
-    self.queryFormLayout.addWidget(queryButton)
-    queryButton.connect('clicked(bool)', self.onApply)
-
-    # Add vertical spacer
-    self.layout.addStretch(1)
-
-    # Set local var as instance attribute
-    self.queryButton = queryButton
-    
+     # Instantiate and connect widgets ...
+ 
+     # Collapsible button
+     parametersCollapsibleButton = ctk.ctkCollapsibleButton()
+     parametersCollapsibleButton.text = "Parameters"
+     self.layout.addWidget(parametersCollapsibleButton)
+ 
+     # Layout within the parameters collapsible button
+     parametersFormLayout = qt.QFormLayout(parametersCollapsibleButton)
+ 
+     # fiber
+     self.fiberSelector = slicer.qMRMLNodeComboBox(parametersCollapsibleButton)
+     self.fiberSelector.nodeTypes = ( ("vtkMRMLFiberBundleNode"), "" )
+     self.fiberSelector.selectNodeUponCreation = False
+     self.fiberSelector.addEnabled = False
+     self.fiberSelector.removeEnabled = False
+     self.fiberSelector.noneEnabled = True
+     self.fiberSelector.showHidden = False
+     self.fiberSelector.showChildNodeTypes = False
+     self.fiberSelector.setMRMLScene( slicer.mrmlScene )
+     self.fiberSelector.setToolTip( "Pick the full-brain tractography in VTK format: It must be a vtkPolyData object where all the cells are lines." )
+     parametersFormLayout.addRow("Fiber Bundle", self.fiberSelector)
+ 
+     # label map
+     self.labelSelector = slicer.qMRMLNodeComboBox(parametersCollapsibleButton)
+     self.labelSelector.nodeTypes = ( ("vtkMRMLScalarVolumeNode"), "" )
+     #self.labelSelector.addAttribute( "vtkMRMLScalarVolumeNode", "LabelMap", 1 )
+     self.labelSelector.selectNodeUponCreation = False
+     self.labelSelector.addEnabled = False
+     self.labelSelector.removeEnabled = False
+     self.labelSelector.noneEnabled = True
+     self.labelSelector.showHidden = False
+     self.labelSelector.showChildNodeTypes = False
+     self.labelSelector.setMRMLScene( slicer.mrmlScene )
+     self.labelSelector.setToolTip( "Pick A brain parcellation, obtained from freesurfer in the same space as the full-brain tractography." )
+     parametersFormLayout.addRow("Brain Parcellation ", self.labelSelector)
+ 
+     # query script 
+     self.queryScript = qt.QTextEdit()
+     self.queryScript.setToolTip( "WMQL query text." )
+     #self.labelValue.setValue(1)
+     parametersFormLayout.addWidget(self.queryScript)
+ 
+     # apply
+     self.applyButton = qt.QPushButton(parametersCollapsibleButton)
+     self.applyButton.text = "Apply"
+     parametersFormLayout.addWidget(self.applyButton)
+ 
+     self.applyButton.connect('clicked()', self.onApply)
+ 
+     # Add vertical spacer
+     self.layout.addStretch(1)      
+      
+      
   def onApply(self):
-    print "Hello World !"
     fiberNode = self.fiberSelector.currentNode()
     labelNode = self.labelSelector.currentNode()
+    queryScript=self.queryScript.plainText
+    print queryScript
+    
     if not fiberNode and not labelNode:
        qt.QMessageBox.critical(slicer.util.mainWindow(), 'FiberBundleToLabelMap', "Must select fiber bundle and label map")
        return
-   # query_script=file('\\Users\\Georgios\\workspace\\tract_querier\\queries\\FreeSurfer.qry').read()
-   # fiber_path='\\Users\\Georgios\\workspace\\tract_querier\\OutputFiberBundle.vtk'
-   # slicer.util.loadFiberBundle(fiber_path)
-   # fiberNode=slicer.util.getNode(pattern="OutputFiberBundle")
-   # parc_path='\\Users\\Georgios\\workspace\\tract_querier\\parc.nii.gz'
-   # slicer.util.loadVolume(parc_path)
-   # parcNode=slicer.util.getNode(pattern="parc")
-    run(fiberNode, labelNode)
+    run(fiberNode, labelNode,queryScript)
 
 from optparse import OptionParser
 import os
 import sys
 
-def run(fiberNode,parcNode):
-    parser = OptionParser(
-        version=0.1,
-        usage="usage: %prog -t tractography_file -a atlas_file "
-        "-q queries -o result_prefix"
-    )
+def run(fiberNode,parcNode,queryScript):
+    parser=OptionParser()
     (options, args) = parser.parse_args()
 
-    options.tractography_file_name=tractography_file_name
-    options.atlas_file_name=atlas_file_name
-    options.queries_string=queries_string
-    options.output_file_name='output'
     options.bounding_box_affine_transform=None
-    #options.include='C:\\Users\\Georgios\\workspace\\tract_querier'
     options.length_threshold=2
     options.threshold=0
     options.interactive=False
     options.query_selection=''
-    if (
-        not options.tractography_file_name or
-        not options.atlas_file_name or
-        not options.queries_string or
-        not options.output_file_name
-    ):
-        parser.error("incorrect number of arguments")
 
     global np
     global tract_querier
-
     import numpy as np
     import nibabel
-
     import tract_querier
 
-    if options.bounding_box_affine_transform:
-        bounding_box_affine_transform = np.fromstring(
-            options.bounding_box_affine_transform, sep=','
-        ).reshape(4, 4)
-        print "RAS transform:"
-    else:
-        bounding_box_affine_transform = np.eye(4)
-
     print "Loading files"
-#    if options.include:
-#        folders = [options.include]
-#    else:
     folders = []
-
+    
     default_folder = tract_querier.default_queries_folder
     folders = [os.getcwd()] + folders + [default_folder]
     print folders
     for folder in folders:
         if not (os.path.exists(folder) and os.path.isdir(folder)):
             parser.error("Error in include folder %s" % folder)
-
+    
     try:
-        if os.path.exists(options.queries_string):
-            query_script = file(options.queries_string).read()
-            query_filename = options.queries_string
-        else:
-            found = False
-            for folder in folders:
-                file_ = os.path.join(folder, options.queries_string)
-                if os.path.exists(file_):
-                    found = True
-                    break
-            if found:
-                query_script = file(file_).read()
-                query_filename = file_
-            else:
-                query_script = options.queries_string
-                query_filename = '<script>'
+        query_script=queryScript
+        query_filename=""
 
         query_file_body = tract_querier.queries_preprocess(
             query_script,
             filename=query_filename,
             include_folders=folders
         )
-
+        
         tract_querier.queries_syntax_check(query_file_body)
     except tract_querier.TractQuerierSyntaxError, e:
         parser.error(e.value)
-
-    labels_nii = nibabel.load(options.atlas_file_name)
-    img = labels_nii.get_data()
     
+    #
+    #  convert atlas file to numpy.array, must swap x-z to comply with Demian's data input 
+    #
+    imgOrg= slicer.util.array(parcNode.GetID())
+    img=imgOrg.swapaxes(0,2)
+    
+    affine_ijk_2_ras = vtk.vtkMatrix4x4()
+    parcNode.GetRASToIJKMatrix(affine_ijk_2_ras)  
+    affine_ijk_2_ras.Invert()
+    affine_ijk_2_ras=vtkMatrix_2_array(affine_ijk_2_ras)
+     
     #
     #  covert slicer polydata to tract
     #
@@ -219,20 +185,7 @@ def run(fiberNode,parcNode):
     #
     #  run tract-querier
     #
-    tractography_extension = os.path.splitext(options.tractography_file_name)[-1]
-    if tractography_extension == '.trk':
-        tractography_extra_kwargs = {
-            'affine': tr.affine,
-            'image_dimensions': tr.image_dims
-        }
-
-    else:
-        tractography_extra_kwargs = {}
-
-    print "Calculating labels and crossings"
-    affine_ijk_2_ras = labels_nii.get_affine()
-    tracts = tr.tracts()
-    
+    tracts = tr.tracts()    
     tractography_spatial_indexing = tract_querier.TractographySpatialIndexing(
         tracts, img, affine_ijk_2_ras, options.length_threshold, options.threshold
     )
@@ -242,7 +195,7 @@ def run(fiberNode,parcNode):
         query_file_body,
         tractography_spatial_indexing,
     )
-
+    
     query_names = evaluated_queries.keys()
     print query_names
     if options.query_selection != '':
@@ -252,25 +205,29 @@ def run(fiberNode,parcNode):
     query_names.sort()
     print 'save_query'
     for query_name in query_names:
-        tr_out=save_query(
-            query_name, tr, options, evaluated_queries,
-            extension=tractography_extension, extra_kwargs=tractography_extra_kwargs
-        )
+        tr_out=save_query( query_name, tr, options, evaluated_queries)
 
     #
     #   covert resulting tract to polydata 
     # 
     polyDataOut=tracts_to_vtkPolyData64(tr_out)
-    print 'update polydata'
     updateOutputNode(polyDataOut)
     return   
+
+def vtkMatrix_2_array(m):
+    import numpy
+    out=numpy.zeros(shape=(4,4))
+    for i in range(4):
+        for j in range(4):
+             out[i][j]=m.GetElement(i,j)
+    return out
      
 def save_query(query_name, tractography, options, evaluated_queries, extension='.vtk', extra_kwargs={}):
     tract_numbers = evaluated_queries[query_name]
     print "\tQuery %s: %.6d" % (query_name, len(tract_numbers))
     if tract_numbers:
         tr=save_tractography_file(
-            options.output_file_name + "_" + query_name + extension,
+            "",
             tractography,
             tract_numbers,
             extra_kwargs=extra_kwargs
@@ -402,4 +359,75 @@ def updateOutputNode(polydata):
     # add to scene
     fiberDisplay.SetInputPolyData(polydata)
     scene.AddNode(fiber)
-    
+
+class TractQuerierTest(unittest.TestCase):
+   """
+   This is the test case for your scripted module.
+   """
+
+   def delayDisplay(self,message,msec=1000):
+     """This utility method displays a small dialog and waits.
+     This does two things: 1) it lets the event loop catch up
+     to the state of the test so that rendering and widget updates
+     have all taken place before the test continues and 2) it
+     shows the user/developer/tester the state of the test
+     so that we'll know when it breaks.
+     """
+     print(message)
+     self.info = qt.QDialog()
+     self.infoLayout = qt.QVBoxLayout()
+     self.info.setLayout(self.infoLayout)
+     self.label = qt.QLabel(message,self.info)
+     self.infoLayout.addWidget(self.label)
+     qt.QTimer.singleShot(msec, self.info.close)
+     self.info.exec_()
+ 
+   def setUp(self):
+     """ Do whatever is needed to reset the state - typically a scene clear will be enough.
+     """
+     slicer.mrmlScene.Clear(0)
+ 
+   def runTest(self):
+     """Run as few or as many tests as needed here.
+     """
+     self.setUp()
+     self.test_TractQuerier()
+ 
+   def test_TractQuerier(self):
+     self.applicationLogic = slicer.app.applicationLogic()
+     self.volumesLogic = slicer.modules.volumes.logic()
+ 
+     self.delayDisplay("Starting the test")
+     #
+     # first, get some data
+     #
+     import urllib
+  #   downloads = (
+  #       ('http://slicer.kitware.com/midas3/download?items=5767', 'FA.nrrd', slicer.util.loadVolume),
+  #       ('http://slicer.kitware.com/midas3/download?items=5768', 'tract1.vtk', slicer.util.loadFiberBundle),
+  #       )
+ 
+  #   for url,name,loader in downloads:
+  #     filePath = slicer.app.temporaryPath + '/' + name
+  #     if not os.path.exists(filePath) or os.stat(filePath).st_size == 0:
+  #       print('Requesting download %s from %s...\n' % (name, url))
+  #       urllib.urlretrieve(url, filePath)
+  #     if loader:
+  #       print('Loading %s...\n' % (name,))
+  #       loader(filePath)
+     downloads=((tractography_file_name,slicer.util.loadFiberBundle),
+                (atlas_file_name,slicer.util.loadVolume),
+                )
+     for name,loader in downloads:
+         if loader:
+             print('loading %s ...\n' %(name,))
+             loader(name)
+     query_script = file(queries_string).read()
+     self.delayDisplay('Finished with download and loading\n')
+ 
+     labelNode = slicer.util.getNode(pattern="parc")
+     fiberNode = slicer.util.getNode(pattern="OutputFiberBundle")
+     run(fiberNode, labelNode, query_script)
+     self.delayDisplay('Test passed!')
+
+       
