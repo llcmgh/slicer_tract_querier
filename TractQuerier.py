@@ -203,15 +203,15 @@ def run(fiberNode,parcNode,queryScript):
         query_names = list(set(query_names) & set(selected_queries))
 
     query_names.sort()
-    print 'save_query'
-    for query_name in query_names:
-        tr_out=save_query( query_name, tr, options, evaluated_queries)
 
-    #
-    #   covert resulting tract to polydata 
-    # 
-    polyDataOut=tracts_to_vtkPolyData64(tr_out)
-    updateOutputNode(polyDataOut)
+    print 'save_query'
+    polyDataOut=vtk.vtkAppendPolyData()
+    for query_name in query_names:
+        tr_out_temp=save_query( query_name, tr, options, evaluated_queries)
+        if tr_out_temp is not None:
+             tr_polydata=tracts_to_vtkPolyData64(tr_out_temp)
+             polyDataOut.AddInput(tr_polydata)
+    updateOutputNode(polyDataOut.GetOutput())
     return   
 
 def vtkMatrix_2_array(m):
@@ -225,6 +225,7 @@ def vtkMatrix_2_array(m):
 def save_query(query_name, tractography, options, evaluated_queries, extension='.vtk', extra_kwargs={}):
     tract_numbers = evaluated_queries[query_name]
     print "\tQuery %s: %.6d" % (query_name, len(tract_numbers))
+    tr=None
     if tract_numbers:
         tr=save_tractography_file(
             "",
@@ -402,31 +403,30 @@ class TractQuerierTest(unittest.TestCase):
      # first, get some data
      #
      import urllib
-  #   downloads = (
-  #       ('http://slicer.kitware.com/midas3/download?items=5767', 'FA.nrrd', slicer.util.loadVolume),
-  #       ('http://slicer.kitware.com/midas3/download?items=5768', 'tract1.vtk', slicer.util.loadFiberBundle),
-  #       )
- 
-  #   for url,name,loader in downloads:
-  #     filePath = slicer.app.temporaryPath + '/' + name
-  #     if not os.path.exists(filePath) or os.stat(filePath).st_size == 0:
-  #       print('Requesting download %s from %s...\n' % (name, url))
-  #       urllib.urlretrieve(url, filePath)
-  #     if loader:
-  #       print('Loading %s...\n' % (name,))
-  #       loader(filePath)
-     downloads=((tractography_file_name,slicer.util.loadFiberBundle),
-                (atlas_file_name,slicer.util.loadVolume),
-                )
-     for name,loader in downloads:
-         if loader:
-             print('loading %s ...\n' %(name,))
-             loader(name)
-     query_script = file(queries_string).read()
+     downloads = (
+         ('http://midas.kitware.com/bitstream/view/17622', 'parc.nii.gz', slicer.util.loadVolume),
+         ('http://midas.kitware.com/bitstream/view/17624', 'fiber.vtp', slicer.util.loadFiberBundle),
+         )
+     
+     for url,name,loader in downloads:
+       filePath = slicer.app.temporaryPath + '/' + name
+       #if not os.path.exists(filePath) or os.stat(filePath).st_size == 0:
+       print('Requesting download %s from %s...\n' % (name, url))
+       urllib.urlretrieve(url, filePath)
+       if loader:
+         print('Loading %s...\n' % (name,))
+         loader(filePath)
+
+     query_url='http://midas.kitware.com/bitstream/view/17625'
+     filepath=slicer.app.temporaryPath + '/' + 'test.qry'
+     urllib.urlretrieve(query_url,filepath)     
+     query_script = file(filepath).read()
+     print query_script
      self.delayDisplay('Finished with download and loading\n')
  
      labelNode = slicer.util.getNode(pattern="parc")
-     fiberNode = slicer.util.getNode(pattern="OutputFiberBundle")
+     fiberNode = slicer.util.getNode(pattern="fiber")
+     self.delayDisplay("Running query, please wait ...")
      run(fiberNode, labelNode, query_script)
      self.delayDisplay('Test passed!')
 
