@@ -5,7 +5,7 @@
     <ignored path="tract_querier.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/__init__.py" changelist="dcb394ce-2f71-4a06-80da-29d9a7fa7084" time="1389153819389" ignored="false" />
-    <file path="/a.dummy" changelist="dcb394ce-2f71-4a06-80da-29d9a7fa7084" time="1389195571527" ignored="false" />
+    <file path="/a.dummy" changelist="dcb394ce-2f71-4a06-80da-29d9a7fa7084" time="1389195873179" ignored="false" />
     <file path="/TractQuerier.py" changelist="dcb394ce-2f71-4a06-80da-29d9a7fa7084" time="1389157034440" ignored="false" />
     <file path="/trackvis.py" changelist="dcb394ce-2f71-4a06-80da-29d9a7fa7084" time="1389157229210" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,9 +31,16 @@
         <entry file="file://$PROJECT_DIR$/tract_querier/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state line="20" column="0" selection-start="517" selection-end="517" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="util.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tract_querier/util.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -42,9 +49,7 @@
         <entry file="file://$PROJECT_DIR$/TractQuerier.py">
           <provider selected="true" editor-type-id="text-editor">
             <state line="139" column="1" selection-start="4818" selection-end="4818" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -52,10 +57,8 @@
       <file leaf-file-name="trackvis.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tract_querier/tractography/trackvis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="33" selection-start="143" selection-end="172" vertical-scroll-proportion="-2.8846154">
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
+            <state line="7" column="0" selection-start="107" selection-end="107" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -63,16 +66,34 @@
       <file leaf-file-name="decorator.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tract_querier/tract_math/decorator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="84" column="22" selection-start="2447" selection-end="2447" vertical-scroll-proportion="0.0">
+            <state line="65" column="4" selection-start="1912" selection-end="1912" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="operations.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="setup.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tract_querier/tract_math/setup.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="query_processor.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tract_querier/query_processor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="41" column="0" selection-start="924" selection-end="924" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="operations.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tract_querier/tract_math/operations.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="234" column="23" selection-start="7871" selection-end="7890" vertical-scroll-proportion="0.75059384">
+            <state line="209" column="54" selection-start="6883" selection-end="6883" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -142,6 +163,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tract_querier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="slicer_tract_querier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tract_querier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -170,10 +205,9 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2716418" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24545455" sideWeight="0.7283582" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24924242" sideWeight="0.7283582" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -182,6 +216,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2716418" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -251,40 +286,111 @@
     <entry file="file://$PROJECT_DIR$/tract_querier/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="0" selection-start="517" selection-end="517" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tract_querier/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TractQuerier.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="139" column="1" selection-start="4818" selection-end="4818" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tract_querier/tractography/trackvis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="33" selection-start="143" selection-end="172" vertical-scroll-proportion="-2.8846154">
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
+        <state line="7" column="0" selection-start="107" selection-end="107" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tract_querier/tract_math/decorator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="22" selection-start="2447" selection-end="2447" vertical-scroll-proportion="0.0">
+        <state line="65" column="4" selection-start="1912" selection-end="1912" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tract_querier/query_processor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="0" selection-start="924" selection-end="924" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tract_querier/tract_math/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tract_querier/tract_math/operations.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="234" column="23" selection-start="7871" selection-end="7890" vertical-scroll-proportion="0.75059384">
+        <state line="209" column="54" selection-start="6883" selection-end="6883" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TractQuerier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="139" column="1" selection-start="4818" selection-end="4818" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tract_querier/tract_math/operations.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="209" column="54" selection-start="6883" selection-end="6883" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tract_querier/tractography/trackvis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="107" selection-end="107" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tract_querier/query_processor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="0" selection-start="924" selection-end="924" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tract_querier/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="0" selection-start="517" selection-end="517" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tract_querier/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tract_querier/tract_math/decorator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="4" selection-start="1912" selection-end="1912" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tract_querier/tract_math/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>

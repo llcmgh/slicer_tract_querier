@@ -5,7 +5,7 @@ import numpy
 
 from tractography import Tractography
 
-#from nibabel import trackvis
+from nibabel import trackvis
 
 
 def tractography_to_trackvis_file(filename, tractography, affine=None, image_dimensions=None):
