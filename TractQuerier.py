@@ -137,7 +137,7 @@ def run(fiberNode,parcNode,queryScript):
     global np
     global tract_querier
     import numpy as np
-    import nibabel
+#    import nibabel
     import tract_querier
 
     print "Loading files"
